@@ -1,25 +1,22 @@
-﻿using System;
-using System.IO;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace Config;
 
-public class Config
+public class AppConfig
 {
-    private readonly IConfigurationRoot _configuration;
+    private readonly IConfigurationRoot Configuration;
 
-    public Config()
+    public AppConfig()
     {
         var configPath = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
         
         var builder = new ConfigurationBuilder()
             .AddJsonFile(configPath, optional: true, reloadOnChange: true);
-
-
-        _configuration = builder.Build();
+        
+        Configuration = builder.Build();
     }
 
-    public string Get(string key) => _configuration[key];
+    public string Get(string key) => Configuration[key];
 
     public void Set(string key, string value)
     {
@@ -33,6 +30,6 @@ public class Config
         config[key] = value;
         File.WriteAllText(configFile, Newtonsoft.Json.JsonConvert.SerializeObject(config, Newtonsoft.Json.Formatting.Indented));
         
-        _configuration.Reload();
+        Configuration.Reload();
     }
 }
