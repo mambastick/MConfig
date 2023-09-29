@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace Config;
 
@@ -9,10 +10,10 @@ public class AppConfig
     public AppConfig()
     {
         var configPath = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
-        
+
         var builder = new ConfigurationBuilder()
             .AddJsonFile(configPath, optional: true, reloadOnChange: true);
-        
+
         Configuration = builder.Build();
     }
 
@@ -28,8 +29,9 @@ public class AppConfig
         var json = File.ReadAllText(configFile);
         dynamic config = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
         config[key] = value;
-        File.WriteAllText(configFile, Newtonsoft.Json.JsonConvert.SerializeObject(config, Newtonsoft.Json.Formatting.Indented));
-        
+        File.WriteAllText(configFile,
+            Newtonsoft.Json.JsonConvert.SerializeObject(config, Newtonsoft.Json.Formatting.Indented));
+
         Configuration.Reload();
     }
 }
