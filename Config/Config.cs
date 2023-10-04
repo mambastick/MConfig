@@ -9,79 +9,38 @@ namespace Config
     public class AppConfig
     {
         private readonly IConfigurationRoot Configuration;
-        private readonly byte[] encryptionKey;
-        private readonly byte[] iv;
+        private readonly string ConfigPath;
 
-        public AppConfig(byte[] encryptionKey, byte[] iv)
+        public AppConfig()
         {
-            this.encryptionKey = encryptionKey;
-            this.iv = iv;
-
-            var configPath = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
+            ConfigPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AppSettings.json");
 
             var builder = new ConfigurationBuilder()
-                .AddJsonFile(configPath, optional: true, reloadOnChange: true);
+                .AddJsonFile(ConfigPath, optional: true, reloadOnChange: true);
 
             Configuration = builder.Build();
         }
 
         public string? Get(string key)
         {
-            var encryptedValue = Configuration[key];
-            if (string.IsNullOrWhiteSpace(encryptedValue))
-                return null;
-
-            var decryptedValue = Decrypt(encryptedValue, encryptionKey, iv);
-            return decryptedValue;
+            var value = Configuration[key];
+            return string.IsNullOrWhiteSpace(value) ? null : value;
         }
 
         public void Set(string key, string value)
         {
-            var encryptedValue = Encrypt(value, encryptionKey, iv);
-            var configFile = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
+            if (!File.Exists(ConfigPath))
+                File.WriteAllText(ConfigPath, "{}");
 
-            if (!File.Exists(configFile))
-                File.WriteAllText(configFile, "{}");
-
-            var json = File.ReadAllText(configFile);
+            var json = File.ReadAllText(ConfigPath);
             dynamic config = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
-            config[key] = encryptedValue;
-            File.WriteAllText(configFile,
+            config[key] = value;
+            File.WriteAllText(ConfigPath,
                 Newtonsoft.Json.JsonConvert.SerializeObject(config, Newtonsoft.Json.Formatting.Indented));
 
             Configuration.Reload();
         }
 
-        private string Encrypt(string input, byte[] key, byte[] iv)
-        {
-            using var aesAlg = Aes.Create();
-            aesAlg.Key = key;
-            aesAlg.IV = iv;
-
-            var encryptor = aesAlg.CreateEncryptor(key, iv);
-
-            using var msEncrypt = new MemoryStream();
-            using (var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
-            using (var swEncrypt = new StreamWriter(csEncrypt))
-            {
-                swEncrypt.Write(input);
-            }
-
-            return Convert.ToBase64String(msEncrypt.ToArray());
-        }
-
-        private string Decrypt(string encryptedInput, byte[] key, byte[] iv)
-        {
-            using var aesAlg = Aes.Create();
-            aesAlg.Key = key;
-            aesAlg.IV = iv;
-
-            var decryptor = aesAlg.CreateDecryptor(key, iv);
-
-            using var msDecrypt = new MemoryStream(Convert.FromBase64String(encryptedInput));
-            using var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read);
-            using var srDecrypt = new StreamReader(csDecrypt);
-            return srDecrypt.ReadToEnd();
-        }
+        public string GetConfigPath() => ConfigPath;
     }
 }
