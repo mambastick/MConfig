@@ -8,6 +8,7 @@
 
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>MConfiguration</Title>
+        <Version>1.0.1</Version>
         <Authors>mambastick</Authors>
         <PackageTags>Config;Configuration;Cfg;Json</PackageTags>
         <Description>The MConfig library provides functionality for reading and updating configuration settings stored in a JSON file.</Description>
