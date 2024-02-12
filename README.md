@@ -6,29 +6,29 @@ The `MConfig` class provides functionality for reading and updating configuratio
 
 1. Instantiate the `MConfig`.
 
-   <code>
+   ```csharp
    var configManager = new ConfigManager();
-   </code>
+   ```
 
 2. Retrieve a configuration value by its key.
 
-   <code>
+   ```csharp
    string? value = configManager.Get("key");
-   </code>
+   ```
 
 3. Set a configuration value.
 
-   <code>
+   ```csharp
    configManager.Set("key", "value");
-   </code>
+   ```
 
 ## Methods 🔧
 
 ### Get
 
-<code>
+```csharp
 public string? Get(string key)
-</code>
+```
 
 Retrieves the value associated with the specified key from the configuration.
 
@@ -40,9 +40,9 @@ Retrieves the value associated with the specified key from the configuration.
 
 ### Set
 
-<code>
+```csharp
 public void Set(string key, string value)
-</code>
+```
 
 Sets the value for the specified key in the configuration.
 
@@ -52,9 +52,9 @@ Sets the value for the specified key in the configuration.
 
 ### GetConfigPath
 
-<code>
+```csharp
 public string GetConfigPath()
-</code>
+```
 
 Retrieves the path of the configuration file.
 
