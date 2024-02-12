@@ -1,6 +1,6 @@
 # MConfig 🛠️
 
-The `MConfig` class provides functionality for reading and updating configuration settings stored in a JSON file.
+The `MConfig` library provides functionality for reading and updating configuration settings stored in a JSON file.
 
 ## Usage 🚀
 
