@@ -24,18 +24,13 @@ public class ConfigManager
         return string.IsNullOrWhiteSpace(value) ? null : value;
     }
 
-    public void Set(string key, string value)
+    public void Set<T>(T model)
     {
-        if (!File.Exists(_configPath))
-            File.WriteAllText(_configPath, "{}");
-
-        var json = File.ReadAllText(_configPath);
-        var config = JsonSerializer.Deserialize<dynamic>(json);
-        config[key] = value;
-        File.WriteAllText(_configPath, JsonSerializer.Serialize(config));
-
+        var json = JsonSerializer.Serialize(model);
+        File.WriteAllText(_configPath, json);
         _configuration.Reload();
     }
+
 
     public string GetConfigPath()
     {
