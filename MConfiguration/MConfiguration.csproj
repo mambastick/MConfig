@@ -4,10 +4,10 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>MConfig</RootNamespace>
-        
+        <RootNamespace>MConfiguration</RootNamespace>
+
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Title>MConfig</Title>
+        <Title>MConfiguration</Title>
         <Authors>mambastick</Authors>
         <PackageTags>Config;Configuration;Cfg;Json</PackageTags>
         <Description>The MConfig library provides functionality for reading and updating configuration settings stored in a JSON file.</Description>
@@ -21,14 +21,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="$(MSBuildThisFileDirectory)..\LICENSE" Pack="true" PackagePath="/" />
-        <None Include="$(MSBuildThisFileDirectory)..\README.md" Pack="true" PackagePath="/" />
-        <None Include="$(MSBuildThisFileDirectory)..\logo.png" Pack="true" PackagePath="/" />
+        <None Include="$(MSBuildThisFileDirectory)..\LICENSE" Pack="true" PackagePath="/"/>
+        <None Include="$(MSBuildThisFileDirectory)..\README.md" Pack="true" PackagePath="/"/>
+        <None Include="$(MSBuildThisFileDirectory)..\logo.png" Pack="true" PackagePath="/"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0"/>
     </ItemGroup>
 
 </Project>

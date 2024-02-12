@@ -1,10 +1,10 @@
-# MConfig 🛠️
+# MConfiguration 🛠️
 
-The `MConfig` library provides functionality for reading and updating configuration settings stored in a JSON file.
+The `MConfiguration` library provides functionality for reading and updating configuration settings stored in a JSON file.
 
 ## Usage 🚀
 
-1. Instantiate the `MConfig`.
+1. Instantiate the `MConfiguration`.
 
    ```csharp
    var configManager = new ConfigManager();
@@ -36,7 +36,8 @@ Retrieves the value associated with the specified key from the configuration.
     - `key`: The key of the configuration value to retrieve.
 
 - **Returns**
-    - A string representing the value associated with the specified key. Returns `null` if the key is not found or the value is empty.
+    - A string representing the value associated with the specified key. Returns `null` if the key is not found or the
+      value is empty.
 
 ### Set
 
